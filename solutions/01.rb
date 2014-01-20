@@ -28,7 +28,6 @@ class Array
   end
 
   def average
-    raise ArgumentError, "Method undefined for empty array." if empty?
     reduce { |sum, element| sum + element }.to_f / size
   end
 
