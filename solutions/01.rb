@@ -12,13 +12,11 @@ class Integer
   end
 
   def harmonic
-    raise ArgumentError, "Argument is not of type Integer" unless integer?
-    raise ArgumentError, "Number can't be negative or null" if self <= 0
     (1..self).reduce { |sum, number| sum + Rational(1, number) }
   end
 
   def digits
-    abs.to_s.chars.map { |digit| digit.to_i }
+    abs.to_s.chars.map(&:to_i)
   end
 end
 
