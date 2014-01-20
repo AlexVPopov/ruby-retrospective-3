@@ -1,7 +1,7 @@
 class Integer
   def prime?
-    return true if self == 2
     return false if self < 2
+    return true if self == 2
     if (2..Math.sqrt(self).ceil).any? { |number| (self % number).zero? }
       return false
     end
