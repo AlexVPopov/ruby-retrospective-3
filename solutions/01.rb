@@ -1,9 +1,8 @@
 class Integer
   def prime?
     return false if self < 2
-    return true if self == 2
-    return false if (2..Math.sqrt(self).ceil).any? { |n| (self % n).zero? }
-    true
+    self == 2 or
+    (2..Math.sqrt(self).ceil).none? { |divisor| (self % divisor).zero? }
   end
 
   def prime_factors
