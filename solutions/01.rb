@@ -6,7 +6,7 @@ class Integer
   end
 
   def prime_factors
-    return [] if self.zero? or self == 1
+    return [] if zero? or self == 1
     factor = (2..abs).find { |number| (abs % number).zero? }
     [factor] + (abs / factor).prime_factors
   end
