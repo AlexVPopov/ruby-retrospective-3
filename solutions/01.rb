@@ -28,7 +28,7 @@ class Array
   end
 
   def average
-    reduce { |sum, element| sum + element }.to_f / size
+    reduce(&:+).to_f / size
   end
 
   def drop_every(n)
