@@ -36,9 +36,8 @@ class Array
   end
 
   def combine_with(other)
-    (0...[size, other.size].max).each_with_object([]) do |index, combined|
-      combined << self[index] unless self[index].nil?
-      combined << other[index] unless other[index].nil?
-    end
+    short, long = self.size > other.size ? [other, self] : [self, other]
+    take(short.size).zip(other.take(short.size)).flatten(1) +
+    long.drop(short.size)
   end
 end
