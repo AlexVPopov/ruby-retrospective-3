@@ -1,3 +1,5 @@
+require_relative '../Solutions/01.rb'
+
 describe "Integer#prime?" do
   it "checks if a number is prime" do
     -13.prime?.should eq false

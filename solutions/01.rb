@@ -1,40 +1,34 @@
 class Integer
   def prime?
-    return true if self == 2
     return false if self < 2
-    if (2..Math.sqrt(self).ceil).any? { |number| (self % number).zero? }
-      return false
-    end
-    true
+    self == 2 or
+    (2..Math.sqrt(self).ceil).none? { |divisor| (self % divisor).zero? }
   end
 
   def prime_factors
-    return [] if self.zero? or self == 1
+    return [] if zero? or self == 1
     factor = (2..abs).find { |number| (abs % number).zero? }
     [factor] + (abs / factor).prime_factors
   end
 
   def harmonic
-    raise ArgumentError, "Argument is not of type Integer" unless integer?
-    raise ArgumentError, "Number can't be negative or null" if self <= 0
     (1..self).reduce { |sum, number| sum + Rational(1, number) }
   end
 
   def digits
-    abs.to_s.chars.map { |digit| digit.to_i }
+    abs.to_s.chars.map(&:to_i)
   end
 end
 
 class Array
   def frequencies
-    frequencies = {}
-    uniq.each { |element| frequencies[element] = count(element) }
-    frequencies
+    uniq.each_with_object({}) do |element, frequencies|
+      frequencies[element] = count(element)
+    end
   end
 
   def average
-    raise ArgumentError, "Method undefined for empty array." if empty?
-    reduce { |sum, element| sum + element }.to_f / size
+    reduce(&:+).to_f / size
   end
 
   def drop_every(n)
@@ -42,11 +36,8 @@ class Array
   end
 
   def combine_with(other)
-    combined = []
-    (0...[size, other.size].max).each do |index|
-      combined << self[index] unless self[index].nil?
-      combined << other[index] unless other[index].nil?
-    end
-    combined
+    short, long = self.size > other.size ? [other, self] : [self, other]
+    take(short.size).zip(other.take(short.size)).flatten(1) +
+    long.drop(short.size)
   end
 end
