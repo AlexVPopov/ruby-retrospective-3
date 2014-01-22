@@ -18,7 +18,7 @@ module Graphics
     end
 
     def draw(figure)
-      figure.path.each { |coordinates| set_pixel *coordinates }
+      figure.draw_on(self)
     end
 
     def render_as(renderer)
@@ -89,12 +89,15 @@ module Graphics
 
   class Point
     include Graphics
-    attr_reader :x, :y, :path
+    attr_reader :x, :y
 
     def initialize(x, y)
       @x = x
       @y = y
-      @path = [[@x, @y]]
+    end
+
+    def draw_on(canvas)
+      canvas.set_path x, y
     end
   end
 

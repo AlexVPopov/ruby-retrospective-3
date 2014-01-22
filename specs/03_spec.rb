@@ -50,21 +50,21 @@ describe "Graphics" do
           canvas.pixel_at?(2, 4).should be_true
         end
 
-        # it "works for multiple ones" do
-        #   canvas = make_canvas 4, 4
-        #   canvas.set_pixel 0, 0
-        #   canvas.set_pixel 0, 1
-        #   canvas.set_pixel 1, 2
-        #   canvas.set_pixel 2, 2
-        #   canvas.set_pixel 4, 4
+        it "works for multiple ones" do
+          canvas = make_canvas 4, 4
+          canvas.set_pixel 0, 0
+          canvas.set_pixel 0, 1
+          canvas.set_pixel 1, 2
+          canvas.set_pixel 2, 2
+          canvas.set_pixel 4, 4
 
-        #   check_rendering_of canvas, '
-        #     @---
-        #     @---
-        #     -@@-
-        #     ----
-        #   '
-        # end
+          check_rendering_of canvas, '
+            @---
+            @---
+            -@@-
+            ----
+          '
+        end
       end
 
       context "of lines" do
