@@ -18,7 +18,7 @@ module Graphics
     end
 
     def draw(figure)
-      figure.path.each { |coordinate| set_pixel coordinate[0], coordinate[1] }
+      figure.path.each { |coordinates| set_pixel *coordinates }
     end
 
     def render_as(renderer)
