@@ -34,39 +34,39 @@ module Graphics
     end
 
     module Html
-      HEADER = <<-EOS
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Rendered Canvas</title>
-  <style type="text/css">
-    .canvas {
-      font-size: 1px;
-      line-height: 1px;
-    }
-    .canvas * {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 5px;
-    }
-    .canvas i {
-      background-color: #eee;
-    }
-    .canvas b {
-      background-color: #333;
-    }
-  </style>
-</head>
-<body>
-  <div class="canvas">
-               EOS
+      HEADER = <<-EOS.gsub(/^ {6}/, '').freeze
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Rendered Canvas</title>
+          <style type="text/css">
+            .canvas {
+              font-size: 1px;
+              line-height: 1px;
+            }
+            .canvas * {
+              display: inline-block;
+              width: 10px;
+              height: 10px;
+              border-radius: 5px;
+            }
+            .canvas i {
+              background-color: #eee;
+            }
+            .canvas b {
+              background-color: #333;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="canvas">
+      EOS
 
-      FOOTER = <<-EOS
-  </div>
-</body>
-</html>
-               EOS
+      FOOTER = <<-EOS.gsub(/^ {6}/, '').freeze
+          </div>
+        </body>
+        </html>
+      EOS
 
       def self.render(canvas)
         HEADER +
