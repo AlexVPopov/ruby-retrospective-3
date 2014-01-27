@@ -6,15 +6,15 @@ module Graphics
     def initialize(width, height)
       @width = width
       @height = height
-      @canvas = Array.new(height) { Array.new(width) }
+      @canvas = {}
     end
 
     def set_pixel(x, y)
-      @canvas[y][x] = true
+      @canvas[[x, y]] = true
     end
 
     def pixel_at?(x, y)
-      @canvas[y][x]
+      @canvas[[x, y]]
     end
 
     def draw(figure)
