@@ -151,30 +151,28 @@ module Graphics
 
   class Rectangle
     include Graphics
-    attr_reader :left, :right, :top_left, :top_right,
-                :bottom_left, :bottom_right, :path
+    attr_reader :left, :right, :top_left, :top_left, :bottom_left, :bottom_right
 
     def initialize(first, second)
-      @min_x, @max_x = [first.x, second.x].min, [first.x, second.x].max
-      @min_y, @max_y = [first.y, second.y].min, [first.y, second.y].max
+      @left_x, @right_x = [first.x, second.x].min, [first.x, second.x].max
+      @top_y, @bottom_y = [first.y, second.y].min, [first.y, second.y].max
       set_corners
-      set_path
+    end
+
+    def draw_on(canvas)
+      Graphics::Line.new(@top_left, @top_right).draw_on canvas
+      Graphics::Line.new(@bottom_right, @top_right).draw_on canvas
+      Graphics::Line.new(@top_left, @bottom_left).draw_on canvas
+      Graphics::Line.new(@bottom_left, @bottom_right).draw_on canvas
     end
 
     private
 
     def set_corners
-      @top_left     = @left  = Point.new @min_x, @min_y
-      @top_right             = Point.new @max_x, @min_y
-      @bottom_left           = Point.new @min_x, @max_y
-      @bottom_right = @right = Point.new @max_x, @max_y
-    end
-
-    def set_path
-      @path  = Line.new(@top_left, @top_right).path +
-               Line.new(@top_right, @bottom_right).path +
-               Line.new(@bottom_right, @bottom_left).path +
-               Line.new(@top_left, @bottom_left).path
+      @top_left     = @left  = Point.new @left_x, @top_y
+      @top_right             = Point.new @right_x, @top_y
+      @bottom_left           = Point.new @left_x, @bottom_y
+      @bottom_right = @right = Point.new @right_x, @bottom_y
     end
   end
 

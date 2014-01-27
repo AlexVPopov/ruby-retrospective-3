@@ -152,55 +152,55 @@ describe "Graphics" do
         end
       end
 
-      # context "of rectangles" do
-      #   it "works with simple rects" do
-      #     canvas = make_canvas 10, 5
-      #     canvas.draw make_rectangle(make_point(1, 1), make_point(8, 3))
+      context "of rectangles" do
+        it "works with simple rects" do
+          canvas = make_canvas 10, 5
+          canvas.draw make_rectangle(make_point(1, 1), make_point(8, 3))
 
-      #     check_rendering_of canvas, '
-      #       ----------
-      #       -@@@@@@@@-
-      #       -@------@-
-      #       -@@@@@@@@-
-      #       ----------
-      #     '
-      #   end
+          check_rendering_of canvas, '
+            ----------
+            -@@@@@@@@-
+            -@------@-
+            -@@@@@@@@-
+            ----------
+          '
+        end
 
-      #   it "works with rects defined with their bottom left and top right points" do
-      #     canvas = make_canvas 10, 5
-      #     canvas.draw make_rectangle(make_point(1, 3), make_point(8, 1))
+        it "works with rects defined with their bottom left and top right points" do
+          canvas = make_canvas 10, 5
+          canvas.draw make_rectangle(make_point(1, 3), make_point(8, 1))
 
-      #     check_rendering_of canvas, '
-      #       ----------
-      #       -@@@@@@@@-
-      #       -@------@-
-      #       -@@@@@@@@-
-      #       ----------
-      #     '
-      #   end
+          check_rendering_of canvas, '
+            ----------
+            -@@@@@@@@-
+            -@------@-
+            -@@@@@@@@-
+            ----------
+          '
+        end
 
-      #   # it "works with rects with a zero height as a line" do
-      #   #   canvas = make_canvas 10, 3
-      #   #   canvas.draw make_rectangle(make_point(1, 1), make_point(8, 1))
+        it "works with rects with a zero height as a line" do
+          canvas = make_canvas 10, 3
+          canvas.draw make_rectangle(make_point(1, 1), make_point(8, 1))
 
-      #   #   check_rendering_of canvas, '
-      #   #     ----------
-      #   #     -@@@@@@@@-
-      #   #     ----------
-      #   #   '
-      #   # end
+          check_rendering_of canvas, '
+            ----------
+            -@@@@@@@@-
+            ----------
+          '
+        end
 
-      #   # it "works with rects with a zero width and height as a single point" do
-      #   #   canvas = make_canvas 3, 3
-      #   #   canvas.draw make_rectangle(make_point(1, 1), make_point(1, 1))
+        it "works with rects with a zero width and height as a single point" do
+          canvas = make_canvas 3, 3
+          canvas.draw make_rectangle(make_point(1, 1), make_point(1, 1))
 
-      #   #   check_rendering_of canvas, '
-      #   #     ---
-      #   #     -@-
-      #   #     ---
-      #   #   '
-      #   # end
-      # end
+          check_rendering_of canvas, '
+            ---
+            -@-
+            ---
+          '
+        end
+      end
 
       # it "renders multiple drawn shapes" do
       #   canvas = make_canvas 15, 15
