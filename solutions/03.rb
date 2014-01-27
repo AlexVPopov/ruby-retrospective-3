@@ -29,14 +29,11 @@ module Graphics
   module Renderers
     module Ascii
       def self.render(canvas)
-        display = ''
-        0.upto(canvas.height - 1) do |row|
-          0.upto(canvas.width - 1) do |col|
-            display << (canvas.pixels[[col, row]] ? '@' : '-')
-          end
-          display << "\n"
-        end
-        display.chop
+        0.upto(canvas.height.pred).map do |y|
+          0.upto(canvas.width.pred).map do |x|
+            canvas.pixels[[x, y]] ? '@' : '-'
+          end.join('')
+        end.join("\n")
       end
     end
 
@@ -150,29 +147,6 @@ module Graphics
         end
       end
     end
-
-    # def set_path
-    #   begin
-    #     @error_2 = 2 * @err
-    #     correct_x
-    #     correct_y
-    #     @path << [@x, @y]
-    #   end until (@x == @to.x && @y == @to.y)
-    # end
-
-    # def correct_x
-    #   if @error_2 >= @delta_y
-    #       @err += @delta_y
-    #       @x += @step_x
-    #   end
-    # end
-
-    # def correct_y
-    #   if @error_2 <= @delta_x
-    #     @err += @delta_x
-    #     @y += @step_y
-    #   end
-    # end
   end
 
   class Rectangle
