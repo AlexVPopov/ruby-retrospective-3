@@ -92,8 +92,7 @@ module Graphics
     attr_reader :x, :y
 
     def initialize(x, y)
-      @x = x
-      @y = y
+      @x, @y = x, y
     end
 
     def draw_on(canvas)
