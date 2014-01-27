@@ -124,15 +124,15 @@ module Graphics
       delta_y = (to_y - from_y).abs
       step_x  = from_x < to_x ? 1 : -1
       step_y  = from_y < to_y ? 1 : -1
-      error   = delta_x - delta_y
+      base_error = delta_x - delta_y
 
       loop do
         canvas.set_pixel from_x, from_y
         break if from_x == to_x and from_y == to_y
-        deviation = 2 * error
+        error = 2 * base_error
 
-        if deviation > -delta_y
-          error -= delta_y
+        if error > -delta_y
+          base_error -= delta_y
           from_x += step_x
         end
 
@@ -141,8 +141,8 @@ module Graphics
           break
         end
 
-        if deviation < delta_x
-          error += delta_x
+        if error < delta_x
+          base_error += delta_x
           from_y += step_y
         end
       end
