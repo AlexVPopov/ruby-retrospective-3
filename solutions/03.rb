@@ -102,15 +102,11 @@ module Graphics
 
   class Line
     include Graphics
-    attr_reader :from, :to, :path
+    attr_reader :from, :to
 
     def initialize(from, to)
+      from, to = to, from if from.x > to.x or (from.x == to.x and from.y > to.y)
       @from, @to = from, to
-      @delta_x, @delta_y = (@to.x - @from.x).abs, -(@to.y - @from.y).abs
-      @step_x, @step_y  = (@from.x < @to.x ? 1 : -1), (@from.y < @to.y ? 1 : -1)
-      @err, @x, @y = @delta_x + @delta_y, @from.x, @from.y
-      @path = [[@x, @y]]
-      set_path
     end
 
     private
