@@ -1,20 +1,20 @@
 module Graphics
   class Canvas
     attr_reader :width, :height
-    attr_accessor :canvas
+    attr_accessor :pixels
 
     def initialize(width, height)
       @width = width
       @height = height
-      @canvas = {}
+      @pixels = {}
     end
 
     def set_pixel(x, y)
-      @canvas[[x, y]] = true
+      @pixels[[x, y]] = true
     end
 
     def pixel_at?(x, y)
-      @canvas[[x, y]]
+      @pixels[[x, y]]
     end
 
     def draw(figure)
@@ -29,7 +29,14 @@ module Graphics
   module Renderers
     module Ascii
       def self.render(canvas)
-        canvas.canvas.map { |row| Renderers.process_row(row, '@', '-') }.join("\n")
+        display = ''
+        0.upto(canvas.height - 1) do |row|
+          0.upto(canvas.width - 1) do |col|
+            display << (canvas.pixels[[col, row]] ? '@' : '-')
+          end
+          display << "\n"
+        end
+        display.chop
       end
     end
 
@@ -96,7 +103,7 @@ module Graphics
     end
 
     def draw_on(canvas)
-      canvas.set_path x, y
+      canvas.set_pixel x, y
     end
   end
 
@@ -105,34 +112,67 @@ module Graphics
     attr_reader :from, :to
 
     def initialize(from, to)
-      from, to = to, from if from.x > to.x or (from.x == to.x and from.y > to.y)
       @from, @to = from, to
+    end
+
+
+    def draw_on(canvas)
+      rasterize(canvas, @from.x, @from.y, @to.x, @to.y)
     end
 
     private
 
-    def set_path
-      begin
-        @error_2 = 2 * @err
-        correct_x
-        correct_y
-        @path << [@x, @y]
-      end until (@x == @to.x && @y == @to.y)
-    end
+    def rasterize(canvas, from_x, from_y, to_x, to_y)
+      delta_x = (to_x - from_x).abs
+      delta_y = (to_y - from_y).abs
+      step_x  = from_x < to_x ? 1 : -1
+      step_y  = from_y < to_y ? 1 : -1
+      error   = delta_x - delta_y
 
-    def correct_x
-      if @error_2 >= @delta_y
-          @err += @delta_y
-          @x += @step_x
+      loop do
+        canvas.set_pixel from_x, from_y
+        break if from_x == to_x and from_y == to_y
+        deviation = 2 * error
+
+        if deviation > -delta_y
+          error -= delta_y
+          from_x += step_x
+        end
+
+        if from_x == to_x and from_y == to_y
+          canvas.set_pixel from_x, from_y
+          break
+        end
+
+        if deviation < delta_x
+          error += delta_x
+          from_y += step_y
+        end
       end
     end
 
-    def correct_y
-      if @error_2 <= @delta_x
-        @err += @delta_x
-        @y += @step_y
-      end
-    end
+    # def set_path
+    #   begin
+    #     @error_2 = 2 * @err
+    #     correct_x
+    #     correct_y
+    #     @path << [@x, @y]
+    #   end until (@x == @to.x && @y == @to.y)
+    # end
+
+    # def correct_x
+    #   if @error_2 >= @delta_y
+    #       @err += @delta_y
+    #       @x += @step_x
+    #   end
+    # end
+
+    # def correct_y
+    #   if @error_2 <= @delta_x
+    #     @err += @delta_x
+    #     @y += @step_y
+    #   end
+    # end
   end
 
   class Rectangle
